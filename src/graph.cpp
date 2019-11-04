@@ -56,14 +56,33 @@ void Graph::topologicalSort(){
 
 }
 
-
-void Graph::insertNode(Node v) 
+int findSchool(int id)
 {
-    nodes.push_back(v);
+    vector<struct School>::iterator i;
+
+    for (i = schools.begin(); i != schools.end(); i++){
+        if ((*i).id == id)
+            return id;
+    }
 }
 
-void Graph::insertEdge(int v, int w)
+void Graph::insertTeacher(Teacher v) 
 {
-    nodes[v-1].adj.push_back(&nodes[w-1]);
-    nodes[w-1].grau++;
+    teachers.push_back(v);
+}
+
+void Graph::insertSchool(School v) 
+{
+    schools.push_back(v);
+}
+
+void Graph::insertEdge(int id_school, int id_teacher)
+{
+    School v1 = &findSchool(id_school);
+    Teacher v2 = &findSchool(id_teacher);
+
+    if(v1 != null && v2 != null){
+        v1->push_back(v2);
+        v2->push_back(v1);
+    }
 }

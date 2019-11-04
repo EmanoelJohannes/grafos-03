@@ -1,8 +1,4 @@
 #include <string>
-#include <list>
-#include <iterator>
-#include <stack>
-#include <queue>
 #include <vector>
 
 #ifndef _GRAPH_H_
@@ -10,24 +6,22 @@
 
 using namespace std;
 
-struct Professor {
+struct Teacher {
 	int id;
-	int habilidades;
-	vector<struct Escola*> preferencias;
+	int skills;
+	vector<struct School*> schools;
 };
 
-struct Escola {
+struct School {
 	int id;
-	int ocupadas;
-	vector<int> habilidades;
-	vector<struct Professor*> professores;
+	vector<int> skills;
 };
 
 class Graph
 {
     
-	vector<struct Professor> professores;
-  vector<struct Escola> escolas;
+	vector<struct Teacher> teachers;
+  vector<struct School> schools;
 
 public:
     // void DFS(Node &v);
@@ -36,9 +30,13 @@ public:
 
     // void topologicalSort();
 
-    // void insertNode(Node v);
+		int findSchool(int id);
 
-    // void insertEdge(int v, int w);
+    void insertTeacher(Teacher v);
+
+		void insertSchool(School v);
+
+    void insertEdge(int id_school, int id_teacher);
 
 };
 
