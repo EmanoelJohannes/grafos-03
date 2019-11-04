@@ -1,8 +1,4 @@
 #include <string>
-#include <list>
-#include <iterator>
-#include <stack>
-#include <queue>
 #include <vector>
 
 class Graph
