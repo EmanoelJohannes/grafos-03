@@ -1,5 +1,7 @@
 #include <iostream>
+#include <cstdio>
 #include <stdio.h>
+#include <string.h>
 #include <fstream>
 #include <string>
 #include <vector>
@@ -9,46 +11,43 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
 
-    Graph graph;
+    //Read our file
+    string path = INPUT_FILE;
+    FILE *file = fopen((char *)path.c_str(), "r");
 
-    string line;
+    //After removing useless things (not formatted), we just wave 150 lines
+    int id, tSkills, tPref1, tPref2, tPref3, tPref4;
+    char line[150];
 
-    ifstream file(INPUT_FILE);
+    int sV1, sV2;
 
-    string codigo, preferencias;
-    int habilitacoes;
-
-    while (getline(file, line))
+    while (fgets(line, 150, file))
     {
-        char a1, a2, a3, a4;
-        sscanf(line, "&s &s &s &s", a1, a2, a3, a4);
 
-        cout << a1 << a2 << a3 << a4 << endl;
-        // cout << line << endl;
-        // for (char& c : line ){
-        //   if (c == '/'){            
-        //     break;
-        //   }
+        //(P1, 3): (E10, E20, E1, E3)
+        //(E10):(1):(2)
 
-        //   if (c == 'P'){
+        //Lets check if line starts with (P
+        if (strstr(line, "(P"))
+        {
 
-        //     cout << line << endl;
-            
-        //     file >> codigo >> habilitacoes;
+            sscanf(line, "(P%d, %d): (E%d, E%d, E%d, E%d)", &id, &tSkills, &tPref1, &tPref2, &tPref3, &tPref4);
 
-        //     // for (char& preferenciasChar : line){
-        //     //   cout << preferenciasChar;
-        //     // }
+            cout << "Professor : " << id << " " << tSkills << "\nEscolas: " << tPref1 << " " << tPref2 << endl
+                 << endl;
+        }
 
-        //     // cout << endl << endl;
+        //Lets check if line starts with (E
+        else if (strstr(line, "(E"))
+        {
 
-        //     string prof = codigo.substr(codigo.find('P')+1, codigo.find(",")-1);
-        //     cout << "Codigo: " << prof << "\nHabilitacaoes: " << habilitacoes;
-        //   }
-          // cout << c; 
+            sscanf(line, "(E%d): (%d, %d)", &id, &sV1, &sV2);
+            cout << "Escola: " << id << "\nHabilitacoes: " << sV1 << endl;
+        }
     }
-    
+
     return 0;
 }
