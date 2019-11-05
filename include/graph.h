@@ -1,8 +1,4 @@
 #include <string>
-#include <list>
-#include <iterator>
-#include <stack>
-#include <queue>
 #include <vector>
 
 #ifndef _GRAPH_H_
@@ -10,35 +6,58 @@
 
 using namespace std;
 
-struct Professor {
+struct Teacher {
 	int id;
-	int habilidades;
-	vector<struct Escola*> preferencias;
+	int skills;
+	vector<struct School*> schools;
 };
 
-struct Escola {
+struct School {
 	int id;
-	int ocupadas;
-	vector<int> habilidades;
-	vector<struct Professor*> professores;
+	vector<int> skills;
 };
 
 class Graph
 {
     
-	vector<struct Professor> professores;
-  vector<struct Escola> escolas;
+	vector<struct Teacher> teachers;
+  vector<struct School> schools;
 
 public:
-    // void DFS(Node &v);
 
-    // void topologicalSort_DFS(Node &v, stack<struct Node> &pilha);
 
-    // void topologicalSort();
+		/*
+		* Finds a school by id in the school list, and returns the school id if found.
+		*
+		* @param values: id (school id).
+		* @return school id if found
+		*/
+		int findSchool(int id);
 
-    // void insertNode(Node v);
 
-    // void insertEdge(int v, int w);
+		/*
+		* Insert a new teacher inside the teachers vector.
+		*
+		* @param values: node type Teacher.
+		*/
+    void insertTeacher(Teacher v);
+
+
+		/*
+		* Insert a new school inside the schools vector.
+		*
+		* @param values: node type School.
+		*/
+		void insertSchool(School v);
+
+
+		/*
+		* Checks if the school and teacher id's are valid, and adds an edge between them.
+		*
+		* @param values id.
+		* @return school id if found
+		*/
+    void insertEdge(int id_school, int id_teacher);
 
 };
 

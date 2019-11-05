@@ -1,69 +1,108 @@
-#include <bits/stdc++.h>
-#include <stdio.h>
+#include "../headers/graph.h"
 #include <vector>
-#include <queue>
-#include <stack>
-#include <algorithm>
+#include <exception>
+#include <iterator>
 #include <iostream>
-#include "../include/graph.h"
 
-void Graph::DFS(Node &v)
-{   
-    for(int i = 0; i < v.adj.size(); i++){
-        if (v.adj[i]->visited == false){
-            DFS(*v.adj[i]);
-        }            
-    }
+using namespace std;
 
-    v.visited = true;   
-}
+Graph::Graph() {}
 
-
-void Graph::topologicalSort_DFS(Node &v , stack<struct Node> &pilha) { 
-
-    for(int i = 0; i < v.adj.size(); i++){
-        if (v.adj[i]->visited == false){
-            topologicalSort_DFS(*v.adj[i], pilha);
-        }            
-    } 
-    pilha.push(v); 
-    v.visited = true;
-}
-
-void Graph::topologicalSort(){
-    stack<struct Node> pilha; 
-
-    int peso;
-
-    ofstream arquivo;
-  
-    for(int i =0; i < nodes.size(); i++) {
-        nodes[i].visited = false;
-    }
-  
-    for(int i =0; i < nodes.size(); i++){
-        if (nodes[i].visited == false) {
-            topologicalSort_DFS(nodes[i], pilha); 
-        }
-    } 
-
-    cout << "Possivel ordenacao topologica: \n\n";
-
-    while (!pilha.empty()) { 
-        cout << pilha.top().id << " => " << pilha.top().nome << endl; 
-        pilha.pop(); 
-    }   
-
-}
-
-
-void Graph::insertNode(Node v) 
+void Graph::addNode(School e)
 {
-    nodes.push_back(v);
+	if (!checkSchool(e.id))
+		escolas.push_back(e);
+	else
+		cout << "School [E" << e.id << "] já existe no grafo.";
 }
 
-void Graph::insertEdge(int v, int w)
+void Graph::addNode(Teacher p)
 {
-    nodes[v-1].adj.push_back(&nodes[w-1]);
-    nodes[w-1].grau++;
+	if (!checkTeacher(p.id))
+		profs.push_back(p);
+	else
+		cout << "Teacher [P" << p.id << "] já existe no grafo.";
+}
+
+bool Graph::checkSchool(int id)
+{
+	vector<School>::iterator it;
+	for (it = escolas.begin(); it != escolas.end(); it++)
+		if ((*it).id == id)
+			return true;
+
+	return false;
+}
+
+bool Graph::checkTeacher(int id)
+{
+	vector<Teacher>::iterator it;
+	for (it = profs.begin(); it != profs.end(); it++)
+		if ((*it).id == id)
+			return true;
+
+	return false;
+}
+
+Node &Graph::findSchool(int id)
+{
+	vector<School>::iterator it;
+	for (it = escolas.begin(); it != escolas.end(); it++)
+		if ((*it).id == id)
+			return *it;
+
+	throw "Argumento invalido.";
+}
+
+Node &Graph::findTeacher(int id)
+{
+	vector<Teacher>::iterator it;
+	for (it = profs.begin(); it != profs.end(); it++)
+		if ((*it).id == id)
+			return *it;
+
+	throw "Argumento invalido.";
+}
+
+bool Graph::checkEdge(int id_esc, int id_prof)
+{
+	Node *v1 = &findSchool(id_esc);
+	Node *v2 = &findTeacher(id_prof);
+
+	return (v1->checkEdge(v2));
+}
+
+void Graph::addEdge(int id_esc, int id_prof)
+{
+	Node *v1 = &findSchool(id_esc);
+	Node *v2 = &findTeacher(id_prof);
+	v1->push_back(v2);
+	v2->push_back(v1);
+}
+
+void Graph::removeEdge(int id_esc, int id_prof)
+{
+	if (checkEdge(id_esc, id_prof))
+	{
+		Node *v1 = &findSchool(id_esc);
+		Node *v2 = &findTeacher(id_prof);
+		v1->removeEdge(v2);
+		v2->removeEdge(v1);
+	}
+	else
+		cout << "Aresta (" << id_esc << ", " << id_prof << ") não existe." << endl;
+}
+
+ostream &operator<<(ostream &os, const Graph &grafo)
+{
+	os << "\nESCOLAS:\n";
+	for (const School &v : grafo.escolas)
+		os << v;
+
+	os << "\nPROFESSORES:\n";
+	for (const Teacher &v : grafo.profs)
+		os << v;
+
+	os << endl;
+	return os;
 }
