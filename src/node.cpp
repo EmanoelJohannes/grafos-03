@@ -64,11 +64,11 @@ void School::nextJob()
 
 ostream &operator<<(ostream &os, const School &school)
 {
-	os << "[E" << school.id << "] - vagas: " << school.jobs.size() << ", Pretende ";
+	os << "[" << school.id << "] - vagas: " << school.jobs.size() << ", Pretende ";
 	for (int habt : school.jobs)
 		os << "(" << habt << ")";
 
-	os << " habilitações respectivamente." << endl;
+	os << " habilidades." << endl;
 	return os;
 }
 
@@ -84,7 +84,7 @@ Teacher::Teacher(int _id, int _skills, int s1, int s2, int s3, int s4)
 
 ostream &operator<<(ostream &os, const Teacher &teacher)
 {
-	os << "[P" << teacher.id << "] - habilitações: " << teacher.skills << ", preferências: ";
+	os << "[P" << teacher.id << "] - habilitacoes: " << teacher.skills << ", preferencias: ";
 	for (int esc : teacher.choices)
 		os << "(" << esc << ")";
 

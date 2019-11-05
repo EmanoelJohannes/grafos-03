@@ -45,6 +45,8 @@ int main()
                 sscanf(line, "(P%d, %d): (E%d, E%d, E%d, E%d)", &id, &tSkills, &tPref1, &tPref2, &tPref3, &tPref4);
 
                 graph.addNode(Teacher(id, tSkills, tPref1, tPref2, tPref3, tPref4));
+
+
               
             }
 
@@ -61,6 +63,8 @@ int main()
                 
             }
         }
+
+        cout << graph;
     }
 
     return 0;

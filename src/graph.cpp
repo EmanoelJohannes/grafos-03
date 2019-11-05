@@ -95,11 +95,11 @@ void Graph::removeEdge(int id_esc, int id_prof)
 
 ostream &operator<<(ostream &os, const Graph &grafo)
 {
-	os << "\nESCOLAS:\n";
+	os << "\nLista das Escolas:\n";
 	for (const School &v : grafo.escolas)
 		os << v;
 
-	os << "\nPROFESSORES:\n";
+	os << "\nLista dos Professores:\n";
 	for (const Teacher &v : grafo.profs)
 		os << v;
 
